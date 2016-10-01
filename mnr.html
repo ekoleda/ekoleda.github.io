@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title>Metro North Linker</title>
+  </head>
+  <body>
+    <div>Redirecting...</div>
+    <form action="http://as0.mta.info/mnr/schedules/sched_results.cfm?n=y" method="post">
+      <label for="orig_id">Origin station ID: </label><input type="text" name="orig_id" /><br/>
+      <label for="dest_id">Destination station ID: </label><input type="text" name="dest_id" /><br/>
+      <label for="traveldate">Travel date: </label><input type="text" name="traveldate" /><br/>
+      <label for="Time_id">Travel time: </label><input type="text" name="Time_id" /><br/>
+      <label for="SelAMPM1">AM/PM: </label><input type="text" name="SelAMPM1" /><br/>
+      <input type="hidden" name="Filter_id" value="1" />
+      <input type="hidden" name="cmdschedule" value="see schedule"/>
+      <button id="update">Update URL</button>
+    </form>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.2.1/moment.min.js"></script>
+    <script>
+      $(function() {
+        $('#update').bind('click', function() {
+          var params = $('input').get().reduce(function(result, input){
+            result[input.name] = input.value;
+            return result;
+          }, {});
+          setParams(params);
+          return false;
+        });
+          
+
+        var params = getParams();
+        if (params.go == 'yes') {
+          $('form').hide();
+        }
+
+        var now = moment();
+        $('input[name=orig_id]').val(params.orig_id);
+        $('input[name=dest_id]').val(params.dest_id);
+        $('input[name=traveldate]').val(params.traveldate || now.format('MM-DD-YYYY'));
+        $('input[name=Time_id]').val(params.Time_id || now.format('hh:mm'));
+        $('input[name=SelAMPM1]').val(params.SelAMPM1 || now.format('A'));
+        
+        if (params.go == 'yes') {
+          $('form').submit();
+        }
+      })
+      
+      function getParams() {
+        return location.search.slice(1).split('&').reduce(function(result, pair) {
+          var parts = pair.split('=').map(function(part) {
+            return decodeURIComponent(part);
+          });
+          result[parts[0]] = parts[1];
+          return result;
+        }, {});
+      }
+      
+      function setParams(params) {
+        params['go'] = 'no';
+        window.history.pushState(null, null, '?' + Object.keys(params).map(function(key) {
+          return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+        }).join('&')); 
+      }
+    </script>
+  </body>
+</html>
