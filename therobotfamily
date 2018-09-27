@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <form action="http://therobotbaby.tumblr.com/" method="post">
+      <input type="hidden" name="password" value="Colgate13" />
+    </form>
+
+    <p>Redirecting...</p>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script>
+      $('form').submit();
+    </script>
+  </body>
+</html>
