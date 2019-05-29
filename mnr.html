@@ -37,7 +37,7 @@
         var now = moment();
         $('input[name=orig_id]').val(params.orig_id);
         $('input[name=dest_id]').val(params.dest_id);
-        $('input[name=traveldate]').val(params.traveldate || now.format('MM-DD-YYYY'));
+        $('input[name=traveldate]').val(params.traveldate || now.format('MM/DD/YYYY'));
         $('input[name=Time_id]').val(params.Time_id || now.format('hh:mm'));
         $('input[name=SelAMPM1]').val(params.SelAMPM1 || now.format('A'));
         
