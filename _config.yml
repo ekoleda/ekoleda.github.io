@@ -1,3 +1,5 @@
-include:
-  - ...
-  - .well-known/webfinger
+plugins:
+  - jekyll/mastodon_webfinger
+mastodon:
+  username: erickoleda
+  instance: hachyderm.io
